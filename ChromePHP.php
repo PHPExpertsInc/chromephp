@@ -95,16 +95,16 @@ class ChromePHP
     /**
      * @var array
      */
-    protected $_json = array(
+    protected $_json = [
         'version' => self::VERSION,
-        'columns' => array('log', 'backtrace', 'type'),
-        'rows'    => array(),
-    );
+        'columns' => ['log', 'backtrace', 'type'],
+        'rows'    => [],
+    ];
 
     /**
      * @var array
      */
-    protected $_backtraces = array();
+    protected $_backtraces = [];
 
     /**
      * @var bool
@@ -114,9 +114,9 @@ class ChromePHP
     /**
      * @var array
      */
-    protected $_settings = array(
+    protected $_settings = [
         self::BACKTRACE_LEVEL => 1,
-    );
+    ];
 
     /**
      * @var ChromePHP
@@ -128,7 +128,7 @@ class ChromePHP
      *
      * @var array
      */
-    protected $_processed = array();
+    protected $_processed = [];
 
     /**
      * constructor.
@@ -265,8 +265,8 @@ class ChromePHP
             return $logger;
         }
 
-        $logger->_processed = array();
-        $logs = array_map(array($logger, '_convert'), $args);
+        $logger->_processed = [];
+        $logs = array_map([$logger, '_convert'], $args);
 
         $backtrace = debug_backtrace(false);
         $level = $logger->getSetting(self::BACKTRACE_LEVEL);
@@ -299,7 +299,7 @@ class ChromePHP
         //Also avoid recursion when objects refer to each other
         $this->_processed[] = $object;
 
-        $object_as_array = array();
+        $object_as_array = [];
 
         // first add the class name
         $object_as_array['___class_name'] = get_class($object);
@@ -382,7 +382,7 @@ class ChromePHP
             $this->_backtraces[] = $backtrace;
         }
 
-        $row = array($logs, $backtrace, $type);
+        $row = [$logs, $backtrace, $type];
 
         $this->_json['rows'][] = $row;
         $this->_writeHeader($this->_json);

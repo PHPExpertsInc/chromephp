@@ -6,6 +6,7 @@ return PhpCsFixer\Config::create()
         'elseif'         => false,
         'yoda_style'     => false,
         'list_syntax'    => ['syntax'  => 'short'],
+        'array_syntax'   => ['syntax'  => 'short'],
         'concat_space'   => ['spacing' => 'one'],
         'binary_operator_spaces' => [
             'align_equals'       => false,
