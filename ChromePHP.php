@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2010-2015 Craig Campbell
+ * Copyright 2010-2015 Craig Campbell.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,9 +21,8 @@ use ReflectionClass;
 use ReflectionProperty;
 
 /**
- * Server Side Chrome PHP debugger class
+ * Server Side Chrome PHP debugger class.
  *
- * @package ChromePhp
  * @author Craig Campbell <iamcraigcampbell@gmail.com>
  */
 class ChromePHP
@@ -99,7 +98,7 @@ class ChromePHP
     protected $_json = array(
         'version' => self::VERSION,
         'columns' => array('log', 'backtrace', 'type'),
-        'rows' => array()
+        'rows'    => array(),
     );
 
     /**
@@ -116,7 +115,7 @@ class ChromePHP
      * @var array
      */
     protected $_settings = array(
-        self::BACKTRACE_LEVEL => 1
+        self::BACKTRACE_LEVEL => 1,
     );
 
     /**
@@ -125,14 +124,14 @@ class ChromePHP
     protected static $_instance;
 
     /**
-     * Prevent recursion when working with objects referring to each other
+     * Prevent recursion when working with objects referring to each other.
      *
      * @var array
      */
     protected $_processed = array();
 
     /**
-     * constructor
+     * constructor.
      */
     private function __construct()
     {
@@ -141,7 +140,7 @@ class ChromePHP
     }
 
     /**
-     * gets instance of this class
+     * gets instance of this class.
      *
      * @return ChromePHP
      */
@@ -150,105 +149,111 @@ class ChromePHP
         if (self::$_instance === null) {
             self::$_instance = new self();
         }
+
         return self::$_instance;
     }
 
     /**
-     * logs a variable to the console
+     * logs a variable to the console.
      *
      * @param mixed $data,... unlimited OPTIONAL number of additional logs [...]
-     * @return void
      */
     public static function log()
     {
         $args = func_get_args();
+
         return self::_log('', $args);
     }
 
     /**
-     * logs a warning to the console
+     * logs a warning to the console.
      *
      * @param mixed $data,... unlimited OPTIONAL number of additional logs [...]
-     * @return void
      */
     public static function warn()
     {
         $args = func_get_args();
+
         return self::_log(self::WARN, $args);
     }
 
     /**
-     * logs an error to the console
+     * logs an error to the console.
      *
      * @param mixed $data,... unlimited OPTIONAL number of additional logs [...]
-     * @return void
      */
     public static function error()
     {
         $args = func_get_args();
+
         return self::_log(self::ERROR, $args);
     }
 
     /**
-     * sends a group log
+     * sends a group log.
      *
      * @param string value
      */
     public static function group()
     {
         $args = func_get_args();
+
         return self::_log(self::GROUP, $args);
     }
 
     /**
-     * sends an info log
+     * sends an info log.
      *
      * @param mixed $data,... unlimited OPTIONAL number of additional logs [...]
-     * @return void
      */
     public static function info()
     {
         $args = func_get_args();
+
         return self::_log(self::INFO, $args);
     }
 
     /**
-     * sends a collapsed group log
+     * sends a collapsed group log.
      *
      * @param string value
      */
     public static function groupCollapsed()
     {
         $args = func_get_args();
+
         return self::_log(self::GROUP_COLLAPSED, $args);
     }
 
     /**
-     * ends a group log
+     * ends a group log.
      *
      * @param string value
      */
     public static function groupEnd()
     {
         $args = func_get_args();
+
         return self::_log(self::GROUP_END, $args);
     }
 
     /**
-     * sends a table log
+     * sends a table log.
      *
      * @param string value
      */
     public static function table()
     {
         $args = func_get_args();
+
         return self::_log(self::TABLE, $args);
     }
 
     /**
-     * internal logging call
+     * internal logging call.
      *
      * @param string $type
+     *
      * @return ChromePHP
      */
     protected static function _log($type, array $args)
@@ -277,9 +282,10 @@ class ChromePHP
     }
 
     /**
-     * converts an object to a better format for logging
+     * converts an object to a better format for logging.
      *
-     * @param Object
+     * @param object
+     *
      * @return array
      */
     protected function _convert($object)
@@ -301,7 +307,6 @@ class ChromePHP
         // loop through object vars
         $object_vars = get_object_vars($object);
         foreach ($object_vars as $key => $value) {
-
             // same instance as parent object
             if ($value === $object || in_array($value, $this->_processed, true)) {
                 $value = 'recursion - parent object [' . get_class($value) . ']';
@@ -313,7 +318,6 @@ class ChromePHP
 
         // loop through the properties and add those
         foreach ($reflection->getProperties() as $property) {
-
             // if one of these properties was already added above then ignore it
             if (array_key_exists($property->getName(), $object_vars)) {
                 continue;
@@ -329,13 +333,15 @@ class ChromePHP
 
             $object_as_array[$type] = $this->_convert($value);
         }
+
         return $object_as_array;
     }
 
     /**
-     * takes a reflection property and returns a nicely formatted key of the property name
+     * takes a reflection property and returns a nicely formatted key of the property name.
      *
      * @param ReflectionProperty $property
+     *
      * @return string
      */
     protected function _getPropertyKey(ReflectionProperty $property)
@@ -355,10 +361,9 @@ class ChromePHP
     }
 
     /**
-     * adds a value to the data array
+     * adds a value to the data array.
      *
      * @var mixed
-     * @return void
      */
     protected function _addRow(array $logs, $backtrace, $type)
     {
@@ -394,32 +399,35 @@ class ChromePHP
                     'ChromePHP Error: The HTML header will surpass the limit of ' .
                     $this->_formatSize(self::HTTPD_HEADER_LIMIT) . ' (' . $this->_formatSize(strlen($header)) .
                     ') - You can increase the HTTPD_HEADER_LIMIT on ChromePHP class, according to your Apache ' .
-                    'LimitRequestFieldsize directive'
-                ], '', self::ERROR
+                    'LimitRequestFieldsize directive',
+                ], '', self::ERROR,
             ];
             $header = self::HEADER_NAME . ': ' . $this->_encode($data);
         }
         header($header);
     }
 
-    protected function _formatSize($arg) {
+    protected function _formatSize($arg)
+    {
         if ($arg > 0) {
             $j = 0;
-            $ext = ["bytes","Kb","Mb","Gb","Tb"];
-            while ($arg >= pow(1024, $j)) ++$j; {
-                $arg = (round($arg / pow(1024, $j - 1) * 100) / 100).($ext[$j - 1]);
+            $ext = ['bytes', 'Kb', 'Mb', 'Gb', 'Tb'];
+            while ($arg >= pow(1024, $j)) {
+                ++$j;
             }
+            $arg = (round($arg / pow(1024, $j - 1) * 100) / 100) . ($ext[$j - 1]);
 
             return $arg;
         }
 
-        return "0Kb";
+        return '0Kb';
     }
 
     /**
-     * encodes the data to be sent along with the request
+     * encodes the data to be sent along with the request.
      *
      * @param array $data
+     *
      * @return string
      */
     protected function _encode($data)
@@ -428,11 +436,10 @@ class ChromePHP
     }
 
     /**
-     * adds a setting
+     * adds a setting.
      *
      * @param string key
      * @param mixed value
-     * @return void
      */
     public function addSetting($key, $value)
     {
@@ -440,10 +447,9 @@ class ChromePHP
     }
 
     /**
-     * add ability to set multiple settings in one call
+     * add ability to set multiple settings in one call.
      *
      * @param array $settings
-     * @return void
      */
     public function addSettings(array $settings)
     {
@@ -453,9 +459,10 @@ class ChromePHP
     }
 
     /**
-     * gets a setting
+     * gets a setting.
      *
      * @param string key
+     *
      * @return mixed
      */
     public function getSetting($key)
@@ -463,6 +470,7 @@ class ChromePHP
         if (!isset($this->_settings[$key])) {
             return null;
         }
+
         return $this->_settings[$key];
     }
 }
