@@ -15,13 +15,18 @@
  * limitations under the License.
  */
 
+namespace ChromePHP;
+
+use ReflectionClass;
+use ReflectionProperty;
+
 /**
  * Server Side Chrome PHP debugger class
  *
  * @package ChromePhp
  * @author Craig Campbell <iamcraigcampbell@gmail.com>
  */
-class ChromePhp
+class ChromePHP
 {
     /**
      * @var string
@@ -115,7 +120,7 @@ class ChromePhp
     );
 
     /**
-     * @var ChromePhp
+     * @var ChromePHP
      */
     protected static $_instance;
 
@@ -138,7 +143,7 @@ class ChromePhp
     /**
      * gets instance of this class
      *
-     * @return ChromePhp
+     * @return ChromePHP
      */
     public static function getInstance()
     {
@@ -244,7 +249,7 @@ class ChromePhp
      * internal logging call
      *
      * @param string $type
-     * @return ChromePhp
+     * @return ChromePHP
      */
     protected static function _log($type, array $args)
     {
@@ -304,7 +309,7 @@ class ChromePhp
             $object_as_array[$key] = $this->_convert($value);
         }
 
-        $reflection = new \ReflectionClass($object);
+        $reflection = new ReflectionClass($object);
 
         // loop through the properties and add those
         foreach ($reflection->getProperties() as $property) {
@@ -330,10 +335,10 @@ class ChromePhp
     /**
      * takes a reflection property and returns a nicely formatted key of the property name
      *
-     * @param ReflectionProperty
+     * @param ReflectionProperty $property
      * @return string
      */
-    protected function _getPropertyKey(\ReflectionProperty $property)
+    protected function _getPropertyKey(ReflectionProperty $property)
     {
         $static = $property->isStatic() ? ' static' : '';
         if ($property->isPublic()) {
