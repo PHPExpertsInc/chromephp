@@ -1,5 +1,5 @@
 {
-    "name": "ccampbell/chromephp",
+    "name": "phpexpertsinc/chromephp",
     "type": "library",
     "description": "Log variables to the Chrome console (via Chrome Logger Google Chrome extension).",
     "keywords": ["log","logging"],
@@ -11,14 +11,19 @@
             "email": "iamcraigcampbell@gmail.com",
             "homepage": "http://craig.is",
             "role": "Developer"
+        },
+        {
+            "name": "Theodore R. Smith",
+            "email": "theodore@phpexperts.pro",
+            "homepage": "https://www.linkedin.com/in/tedrsmith"
         }
     ],
     "require": {
         "php": ">=7.0"
     },
     "autoload": {
-        "psr-0": {
-            "ChromePhp": ""
+        "psr-4": {
+            "ChromePHP\\": ""
         }
     }
 }
