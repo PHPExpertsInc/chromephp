@@ -7,7 +7,7 @@ This library allows you to log variables to the Chrome console.
 - PHP 5 or later
 
 ## License
-This library is licensed under the Apache 2.0 license: 
+This library is licensed under the Apache 2.0 license:
 http://www.apache.org/licenses/LICENSE-2.0
 
 ## Installation
@@ -16,12 +16,17 @@ http://www.apache.org/licenses/LICENSE-2.0
 3. Put ChromePhp.php somewhere in your PHP include path
 4. Log some data
 
-    ```php
-    include 'ChromePhp.php';
-    ChromePhp::log('Hello console!');
-    ChromePhp::log($_SERVER);
-    ChromePhp::warn('something went wrong!');
-    ```
+### Without Composer
+
+```php
+include 'ChromePHP.php';
+
+use ChromePHP\ChromePHP;
+
+ChromePHP::log('Hello console!');
+ChromePHP::log($_SERVER);
+ChromePHP::warn('something went wrong!');
+```
 
 More information can be found here:
 http://www.chromelogger.com
